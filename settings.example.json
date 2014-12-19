@@ -13,19 +13,27 @@
   },
   "folder": {
     "php": {
-			"name": "PHP Apache",
+			"name": "Apache HTTP",
 			"path": "./../",
-			"root": "localhost/{name}"
+			"root": "//localhost/{name}",
+			"badge": "php"
 		},
     "ruby": {
 			"name": "Ruby Webrick",
 			"path": "./../../../Ruby/projects/",
-			"root": "localhost:3000"
+			"root": "//localhost:3000",
+			"badge": "ruby"
 		}
   },
   "hidefolder": [
     "xampp",
     "forbidden",
     "restricted"
-  ]
+  ],
+	"template": "bootstrap",
+	"show": [
+		"Navbar",
+		"Server",
+		"List"
+	]
 }

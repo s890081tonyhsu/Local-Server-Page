@@ -25,10 +25,11 @@ Progress
 - [x] setting.example.json Created.
 - [x] api.php Complete.
 - [x] requireJS, ractiveJS structure Complete.
-- [ ] UI.php Complete.
-- [ ] CSS, template Complete.
-- [ ] index.php calling complete.
+- [x] UI.php Complete.
+- [x] CSS, template Complete (only Bootstrap).
+- [x] index.php calling complete.
 - [ ] install.php complete
+- [ ] output api document
 
 Setup
 ----

@@ -1,6 +1,6 @@
 <?php
-require_once('library/utils.php');
-header('Content-Type: application/json');
+require_once('./library/utils.php');
+header('Content-Type: application/json; charset=utf8');
 $Parameter = isset($_GET['params'])?  $_GET['params']:null;
 $ReturnData;
 $setup = getSetting();

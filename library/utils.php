@@ -68,7 +68,7 @@
 			$data = array();
 			foreach ( $dir as $node ){
 				if ( $node->isDir() && !$node->isDot() ){
-					$data[] = $node->getFilename();
+					$data[] = mb_convert_encoding($node->getFilename(), "UTF-8", "BIG5");
 				}
 			}
 			ksort($data);
@@ -112,6 +112,7 @@
 		private function setProjectDetail($name, $detail){
 			$this->Project['name'] = $name;
 			$this->Project['type'] = $detail->name;
+			$this->Project['badge'] = $detail->badge;
 			$Commit = preg_split('/\s+/',$this->getLastCommit($detail->path.$name.'/.git/logs/refs/heads/master'), 7);
 			$this->Project['commit'] = array(
 				'hash' => $Commit[1],
@@ -120,7 +121,10 @@
 				'type' => explode(':', $Commit[6])[0],
 				'content' => $Commit[6]
 			);
-			$this->Project['markdown'] = $this->MarkdownToHTML($detail->path.$name);
+			$this->Project['markdown'] = array(
+				'show' => false,
+				'html' => $this->MarkdownToHTML($detail->path.$name)
+			);
 			$this->Project['structure'] = $this->getDirectory($detail->path.$name);
 			$this->Project['demo'] = preg_replace('/\{name\}/', $name, $detail->root);
 		}
@@ -166,7 +170,8 @@
 		private function getDirectory( $path = '.'){
 			$structure = array(
 				'directory' => [],
-				'file' => []
+				'file' => [],
+				'show' => false
 			);
 			$ignore = array( 'cgi-bin', '.', '..' );
 			// Directories to ignore when listing output. Many hosts
@@ -178,16 +183,17 @@
 				if( !in_array( $file, $ignore ) ){
 					if( is_dir( "$path/$file" ) ){
 						// Its a directory, put it into structure['directory']
-						array_push($structure['directory'], '$file');
+						array_push($structure['directory'], mb_convert_encoding($file, "UTF-8", "BIG5"));
 					} else {
 						// Put it into structure['file']
-						array_push($structure['file'], '$file');
+						array_push($structure['file'], mb_convert_encoding($file, "UTF-8", "BIG5"));
 					}
 				}
 			}
 			closedir( $dh );
 			// Close the directory handle
-		} 
+			return $structure;
+		}
 	}
 
 	class LinkDetail{
