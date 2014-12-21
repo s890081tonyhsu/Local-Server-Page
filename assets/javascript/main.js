@@ -29,12 +29,22 @@ require(['ractive', 'ret', 'rtf'], function(){
 	var server = new Ractive({
 		el: '#Server-container',
 		template: '#Server-template',
-		data: {}
+		data: {
+			'state': 0,
+			loadstateTxt: function(num){
+				var txt = ['Load Server Status', 'Now Loading...', 'Loading Complete'];
+				return txt[num];
+			}
+		}
 	});
 	server.on('loadServer', function(){
 		var server = this;
+		server.set('state', 1);
+		require.undef('json!root/api.php?params=server');
 		require(['json!root/api.php?params=server'], function(Data){
 			server.set('services', Data);
+			server.set('state', 2);
+			setTimeout(function(){ server.set('state', 0); }, 1000);
 		});
 	});
 
@@ -42,17 +52,26 @@ require(['ractive', 'ret', 'rtf'], function(){
 		el: '#List-container',
 		template: '#List-template',
 		data: {
+			'state': 0,
 			format: function ( timestamp ) {
 				var t = new Date( timestamp*1000 );
 				return t.toString();
-    	}
+    	},
+			loadstateTxt: function(num){
+				var txt = ['Load List', 'Now Loading...', 'Loading Complete'];
+				return txt[num];
+			}
 		},
 	});
 	list.on({
 		'loadList': function(){
 			var list = this;
+			list.set('state', 1);
+			require.undef('json!root/api.php?params=list');
 			require(['json!root/api.php?params=list'], function(Data){
 				list.set('list', Data);
+				list.set('state', 2);
+				setTimeout(function(){ list.set('state', 0); }, 1000);
 			});
 		},
 		'markdownToggle': function(event, show){

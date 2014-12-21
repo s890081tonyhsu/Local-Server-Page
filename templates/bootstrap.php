@@ -65,6 +65,7 @@
 		private function setServer(){
 			$temp = '
 			<!--server-->
+			<div class="row">
 			<h2 id="Server-head">Server Status</h2>
 			{{#each services:i}}
 				<div class="col-md-4" intro="fade:{ delay:{{ (i+1)*100 }}, duration:{{ (i+1)*100 }} }">
@@ -82,9 +83,10 @@
 					{{/if}}
 				</div>
 			{{/each}}
-			{{#unless services}}
-				<button type="button" class="btn btn-primary col-md-12" on-tap="loadServer">Load Server Status</button>
-			{{/unless}}
+			</div>
+			<div class="col-md-8 col-md-offset-2 row">
+					<button type="button" class="btn btn-block btn-{{["primary", "warning", "success"][state]}}" on-tap="loadServer">{{loadstateTxt(state)}}</button>
+			</div>
 			';
 			parent::setTemplate('Server', $temp);
 		}
@@ -101,7 +103,7 @@
 			}
 			$temp = '
 			<!--list-->
-			<div>&nbsp;</div>
+			<div class="row">
 			{{#list}}
 			<h2 id="Projects-head">Repositories</h2>
 			<div class="container">
@@ -158,9 +160,10 @@
 				{{/each}}
 			</div>
 			{{/list}}
-			{{#unless list}}
-				<button type="button" class="btn btn-primary col-md-12" on-tap="loadList">Load List</button>
-			{{/unless}}
+			</div>
+			<div class="col-md-8 col-md-offset-2 row">
+				<button type="button" class="btn btn-{{["primary", "warning", "success"][state]}} col-md-12" on-tap="loadList">{{loadstateTxt(state)}}</button>
+			</div>
 			';
 			parent::setTemplate('List', $temp);
 		}
