@@ -1,8 +1,6 @@
 <?php
 
-	include('library/template.php');
-
-	class bootstrap extends template{
+	class bootstrap extends Template{
 		public function __construct($needed){
 			$this->needed = $needed;
 			parent::__construct($needed);
@@ -84,7 +82,8 @@
 				</div>
 			{{/each}}
 			</div>
-			<div class="col-md-8 col-md-offset-2 row">
+			<div class="col-md-12">&nbsp;</div>
+			<div class="col-md-8 col-md-offset-2">
 					<button type="button" class="btn btn-block btn-{{["primary", "warning", "success"][state]}}" on-tap="loadServer">{{loadstateTxt(state)}}</button>
 			</div>
 			';
@@ -115,8 +114,8 @@
 								<div>
 									<h4>Commits</h4>
 									<p>Hash: {{hash}}</p>
-									<p>{{commiter}} {{type}} at {{format(timestamp)}}</p>
-									<p>{{comtent}}</p>
+									<p>{{author}} commited at {{format(timestamp)}}</p>
+									<p>{{{message}}}</p>
 								</div>
 							{{/commit}}
 							<div class="btn-group pull-right">
@@ -161,7 +160,8 @@
 			</div>
 			{{/list}}
 			</div>
-			<div class="col-md-8 col-md-offset-2 row">
+			<div class="col-md-12">&nbsp;</div>
+			<div class="col-md-8 col-md-offset-2">
 				<button type="button" class="btn btn-{{["primary", "warning", "success"][state]}} col-md-12" on-tap="loadList">{{loadstateTxt(state)}}</button>
 			</div>
 			';

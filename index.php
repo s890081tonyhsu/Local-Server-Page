@@ -5,12 +5,15 @@
 	<title>Localhost's Server</title>
 	<script data-main="assets/javascript/main" src="assets/javascript/require.js"></script>
 	<?php
-		require_once('templates/ui.php');
+		require_once('library/ui.php');
+		$themeName = isset($_GET['theme']) ? $_GET['theme'] : '';
+		$theme = new ThemeImport($themeName);
+		$theme->headRequire();
 	?>
 </head>
 <body>
 	<?php
-		$page = new $template($needed);
+		$theme->contentRequire();
 	?>
 </body>
 </html>

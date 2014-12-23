@@ -63,10 +63,9 @@ A list for project, the other list for links, binding them into one project
       - badge: type css
       - commit: data from last commit, base from local head branch
         - hash: commit hash number
-        - commiter: commit contributer
-        - timestamp: an unix time will convert by js
-        - type: commit type
-        - content: commit content
+        - author: commit contributer
+        - timestamps: an unix time will convert by js
+        - message: commit message
       - markdown: html converted from readme.md
         - show: for js use to show or not
         - html: html text

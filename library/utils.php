@@ -113,14 +113,7 @@
 			$this->Project['name'] = $name;
 			$this->Project['type'] = $detail->name;
 			$this->Project['badge'] = $detail->badge;
-			$Commit = preg_split('/\s+/',$this->getLastCommit($detail->path.$name.'/.git/logs/refs/heads/master'), 7);
-			$this->Project['commit'] = array(
-				'hash' => $Commit[1],
-				'commiter' => $Commit[2],
-				'timestamp' => $Commit[4],
-				'type' => explode(':', $Commit[6])[0],
-				'content' => $Commit[6]
-			);
+			$this->Project['commit'] = $this->getLastCommit($detail->path.$name);
 			$this->Project['markdown'] = array(
 				'show' => false,
 				'html' => $this->MarkdownToHTML($detail->path.$name)
@@ -130,30 +123,39 @@
 		}
 
 		private function getLastCommit($path){
-			$line = '';
-			$f = fopen($path, 'r');
-			$cursor = -1;
-			fseek($f, $cursor, SEEK_END);
-			$char = fgetc($f);
-			/*
-			 * Trim trailing newline chars of the file
-			 */
-			while ($char === "\n" || $char === "\r") {
-				fseek($f, $cursor--, SEEK_END);
-				$char = fgetc($f);
+			$output = array();
+			chdir($path);
+			exec("git log -1",$output);
+			$commit = array();
+			$commit['message'] = '';
+			foreach ($output as $line){
+    		// Clean Line
+    		$line = trim($line);
+
+				// Proceed If There Are Any Lines
+    		if (!empty($line)){
+        	if (strpos($line, 'commit') !== false){
+            // Commit
+						$hash = explode(' ', $line);
+            $hash = trim(end($hash));
+            $commit['hash'] = $hash;
+					}else if (strpos($line, 'Author') !== false) {
+						// Author
+            $author = explode(':', $line);
+            $author = trim(end($author));
+            $commit['author'] = $author;
+					}else if (strpos($line, 'Date') !== false) {
+    	    	// Date
+            $date = explode(':', $line, 2);
+            $date = trim(end($date));
+            $commit['timestamp'] = strtotime($date);
+					}else {
+						// Message
+            $commit['message'].= $line ."<br>";
+        	}
+    		}
 			}
-			/*
-			 * Read until the start of file or first newline char
-			 */
-			while ($char !== false && $char !== "\n" && $char !== "\r") {
-					/*
-					 * Prepend the new char
-					 */
-				$line = $char . $line;
-				fseek($f, $cursor--, SEEK_END);
-				$char = fgetc($f);
-			}
-			return $line;
+			return $commit;
 		}
 
 		private function MarkdownToHTML($path){
