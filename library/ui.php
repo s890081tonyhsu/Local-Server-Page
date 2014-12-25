@@ -1,14 +1,9 @@
 <?php
 	require_once('library/utils.php');
 	require_once('library/template.php');	
-	$themeFolder = new DirectoryIterator('templates');
-	$themeList = array();
-	foreach ( $themeFolder as $node ){
-		if ( !$node->isDot() && $node->getExtension() == 'php'){
-			$theme =  mb_convert_encoding($node->getFilename(), "UTF-8", "BIG5");
-			require_once('templates/'.$theme);
-			$themeList[] = $theme;
-		}
+	$themeList = getThemeList();
+	foreach ( $themeList as $theme ){
+		require_once('templates/'.$theme.'.php');
 	}
 	unset($theme);
 	

@@ -10,6 +10,19 @@
 			return $setting;
 	}
 
+	function getThemeList(){
+		$themeFolder = new DirectoryIterator('templates');
+		$themeList = array();
+		foreach ( $themeFolder as $node ){
+			if ( !$node->isDot() && $node->getExtension() == 'php'){
+				$theme =  mb_convert_encoding($node->getBasename('.php'), "UTF-8", "BIG5");
+				$themeList[] = $theme;
+			}
+		}
+		unset($theme);
+		return $themeList;
+	}
+
 	class ServiceTest{
 		private $ResultList;
 
