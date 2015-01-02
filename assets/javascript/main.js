@@ -22,10 +22,16 @@ require(['ractive', 'ret', 'rtf'], function(){
 								'Server Status': {'id': 'Server-head'}, 
 								'List Projects': {'id': 'Projects-head'},
 								'Local Website': {'id': 'Others-head'}
-							}
+							},
+			templates: {},
 		}
 	});
-	
+
+	require(['json!root/api.php?params=theme'], function(Data){
+		navbar.set('templates', Data);
+		console.log(navbar);
+	});
+
 	var server = new Ractive({
 		el: '#Server-container',
 		template: '#Server-template',

@@ -56,6 +56,14 @@
 			{{#navbar:name}}
 				<li><a href="#{{id}}">{{name}}</a></li>
 			{{/navbar}}
+			<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" href="#">Theme <span class="caret"></span></a>
+				<ul class="dropdown-menu" role="menu">
+					{{#templates:i}}
+						<li><a href="?theme={{templates[i]}}">{{templates[i]}}</a></li>
+					{{/templates}}
+				</ul>
+			</li>
+			
 			';
 			parent::setTemplate('Navbar', $temp);
 		}

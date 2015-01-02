@@ -23,7 +23,7 @@
 		}
 
 		private function themeExist($theme){
-			if(in_array($theme.'.php', $GLOBALS['themeList'])){
+			if(in_array($theme, $GLOBALS['themeList'])){
 				return $theme;
 			}else{
 				return $this->setting->template;
@@ -37,7 +37,7 @@
 				echo '<link rel="stylesheet" href="assets/css/custom/'.$template.'.css">';
 				echo '
 					<script>
-						require([\'jquery.min\', \'assets/javascript/library/'.$template.'.js\', \'assets/javascript/custom/'.$template.'.js\'], function(){
+						require([\'jquery.min\', \'jquery.min!assets/javascript/library/'.$template.'.js\', \'assets/javascript/custom/'.$template.'.js\'], function(){
 							jQuery.noConflict();
 						});
 					</script>

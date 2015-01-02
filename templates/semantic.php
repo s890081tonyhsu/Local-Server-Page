@@ -47,6 +47,14 @@
 			{{#navbar:name}}
 				<a class="item" href="#{{id}}">{{name}}</a>
 			{{/navbar}}
+			<div class="ui simple dropdown item">
+        Theme <i class="icon dropdown"></i>
+        <div class="menu" tabindex="-1">
+					{{#templates:i}}
+          	<a class="item" href="?theme={{templates[i]}}">{{templates[i]}}</a>
+					{{/templates}}
+        </div>
+      </div>
 			';
 			parent::setTemplate('Navbar', $temp);
 		}

@@ -38,6 +38,9 @@ if($Parameter == 'list'){
 	);
 }
 
+if($Parameter == 'theme'){
+	$ReturnData = getThemeList();
+}
 
 exit(json_encode($ReturnData));
 ?>
